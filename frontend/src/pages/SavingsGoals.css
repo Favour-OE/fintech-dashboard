@@ -69,3 +69,9 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+@media (max-width: 640px) {
+  .savings-list {
+    grid-template-columns: 1fr;
+  }
+}
