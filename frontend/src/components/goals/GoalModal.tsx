@@ -1,5 +1,6 @@
-import { useState, useEffect, type FormEvent } from "react"
+import { useState, useEffect, useMemo, type FormEvent } from "react"
 import { createGoal, updateGoal, type CreateGoalPayload, type UpdateGoalPayload, type Goal } from "../../api/goals"
+import { validateGoalForm, type ValidationErrors } from "../../utils/validation"
 import "./GoalModal.css"
 
 interface GoalModalProps {
@@ -9,18 +10,12 @@ interface GoalModalProps {
   editingGoal?: Goal | null
 }
 
-interface FieldErrors {
-  name?: string
-  targetAmount?: string
-  currentAmount?: string
-}
-
 export default function GoalModal({ isOpen, onClose, onSaved, editingGoal }: GoalModalProps) {
   const [name, setName] = useState("")
   const [targetAmount, setTargetAmount] = useState("")
   const [currentAmount, setCurrentAmount] = useState("")
   const [description, setDescription] = useState("")
-  const [errors, setErrors] = useState<FieldErrors>({})
+  const [errors, setErrors] = useState<ValidationErrors>({})
   const [generalError, setGeneralError] = useState("")
   const [submitting, setSubmitting] = useState(false)
 
@@ -42,24 +37,28 @@ export default function GoalModal({ isOpen, onClose, onSaved, editingGoal }: Goa
     setGeneralError("")
   }, [editingGoal, isOpen])
 
-  function validate(): boolean {
-    const e: FieldErrors = {}
-    if (!name.trim()) e.name = "Goal name is required"
-    const target = Number(targetAmount)
-    if (!targetAmount || isNaN(target) || target <= 0)
-      e.targetAmount = "Target amount must be greater than 0"
-    const current = currentAmount ? Number(currentAmount) : 0
-    if (currentAmount && (isNaN(current) || current < 0))
-      e.currentAmount = "Current amount must be 0 or greater"
-    if (current > target)
-      e.currentAmount = "Current amount cannot exceed target"
-    setErrors(e)
-    return Object.keys(e).length === 0
+  function clearFieldError(field: string) {
+    setErrors((prev) => {
+      if (!prev[field]) return prev
+      const next = { ...prev }
+      delete next[field]
+      return next
+    })
   }
+
+  const isFormInvalid = useMemo(() => {
+    const result = validateGoalForm({ name, targetAmount, currentAmount, description })
+    return !result.valid
+  }, [name, targetAmount, currentAmount, description])
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    if (!validate()) return
+    const result = validateGoalForm({ name, targetAmount, currentAmount, description })
+    if (!result.valid) {
+      setErrors(result.errors)
+      return
+    }
+    setErrors({})
     setSubmitting(true)
     setGeneralError("")
     try {
@@ -112,7 +111,7 @@ export default function GoalModal({ isOpen, onClose, onSaved, editingGoal }: Goa
               id="goalName"
               className={`form-input${errors.name ? " form-input--error" : ""}`}
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => { setName(e.target.value); clearFieldError("name") }}
               placeholder="e.g. Emergency Fund"
             />
             {errors.name && <div className="form-error">{errors.name}</div>}
@@ -124,7 +123,7 @@ export default function GoalModal({ isOpen, onClose, onSaved, editingGoal }: Goa
               className={`form-input${errors.targetAmount ? " form-input--error" : ""}`}
               type="number"
               value={targetAmount}
-              onChange={(e) => setTargetAmount(e.target.value)}
+              onChange={(e) => { setTargetAmount(e.target.value); clearFieldError("targetAmount") }}
               placeholder="e.g. 1000000"
             />
             {errors.targetAmount && <div className="form-error">{errors.targetAmount}</div>}
@@ -136,7 +135,7 @@ export default function GoalModal({ isOpen, onClose, onSaved, editingGoal }: Goa
               className={`form-input${errors.currentAmount ? " form-input--error" : ""}`}
               type="number"
               value={currentAmount}
-              onChange={(e) => setCurrentAmount(e.target.value)}
+              onChange={(e) => { setCurrentAmount(e.target.value); clearFieldError("currentAmount") }}
               placeholder="e.g. 250000"
             />
             {errors.currentAmount && <div className="form-error">{errors.currentAmount}</div>}
@@ -153,7 +152,7 @@ export default function GoalModal({ isOpen, onClose, onSaved, editingGoal }: Goa
           </div>
           <div className="modal-actions">
             <button className="btn-secondary" type="button" onClick={onClose}>Cancel</button>
-            <button className="btn-primary" type="submit" disabled={submitting}>
+            <button className="btn-primary" type="submit" disabled={submitting || isFormInvalid}>
               {submitting ? "Saving..." : isEdit ? "Save Changes" : "Create Goal"}
             </button>
           </div>

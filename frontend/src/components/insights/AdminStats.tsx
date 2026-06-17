@@ -3,9 +3,9 @@ import StatCard from "../shared/StatCard"
 import "./AdminStats.css"
 
 function formatCurrency(n: number): string {
-  if (n >= 1_000_000) return `₦${(n / 1_000_000).toFixed(2)}M`
-  if (n >= 1_000) return `₦${(n / 1_000).toFixed(1)}K`
-  return `₦${n.toLocaleString()}`
+  const abs = Math.abs(n)
+  const formatted = abs.toLocaleString()
+  return n < 0 ? `-₦${formatted}` : `₦${formatted}`
 }
 
 function formatChange(pct: number): string {

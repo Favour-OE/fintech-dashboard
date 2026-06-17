@@ -71,6 +71,27 @@
   font-size: 14px;
   font-weight: 600;
   color: #1a1a2e;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.goal-card-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  color: #16a34a;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 4px;
+  padding: 1px 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.goal-card--completed {
+  border-color: #bbf7d0;
+  background: #fafdfa;
 }
 
 .goal-card-desc {

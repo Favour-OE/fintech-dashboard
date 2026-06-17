@@ -2,6 +2,7 @@ import type { Goal } from "../../api/goals"
 import "./GoalCard.css"
 
 function formatCurrency(n: number): string {
+  if (n < 0) return `-₦${Math.abs(n).toLocaleString()}`
   return `₦${n.toLocaleString()}`
 }
 
@@ -23,9 +24,11 @@ interface GoalCardProps {
 
 export default function GoalCard({ goal, animated, onEdit, onDelete }: GoalCardProps) {
   const tint = ICON_TINTS[goal.color] ?? { bg: "#f0fdf4", text: "#16a34a" }
+  const hasZeroTarget = goal.targetAmount <= 0
+  const isCompleted = !hasZeroTarget && goal.progressPercent >= 100
 
   return (
-    <div className="goal-card">
+    <div className={`goal-card${isCompleted ? " goal-card--completed" : ""}`}>
       <div className="goal-card-actions">
         {onEdit && (
           <button className="goal-card-btn" onClick={() => onEdit(goal.id)} title="Edit goal">
@@ -54,7 +57,10 @@ export default function GoalCard({ goal, animated, onEdit, onDelete }: GoalCardP
           {goal.icon}
         </div>
         <div className="goal-card-body">
-          <div className="goal-card-name">{goal.name}</div>
+          <div className="goal-card-name">
+            {goal.name}
+            {isCompleted && <span className="goal-card-badge">Completed!</span>}
+          </div>
           {goal.description && (
             <div className="goal-card-desc">{goal.description}</div>
           )}
@@ -63,16 +69,18 @@ export default function GoalCard({ goal, animated, onEdit, onDelete }: GoalCardP
               <div
                 className="goal-card-progress-fill"
                 style={{
-                  width: `${animated ? goal.progressPercent : 0}%`,
-                  background: goal.color,
+                  width: `${animated && !hasZeroTarget ? goal.progressPercent : 0}%`,
+                  background: hasZeroTarget ? "#e5e7eb" : goal.color,
                 }}
               />
             </div>
             <div className="goal-card-progress-meta">
               <span className="goal-card-amounts">
-                {formatCurrency(goal.currentAmount)} / {formatCurrency(goal.targetAmount)}
+                {formatCurrency(goal.currentAmount)} / {hasZeroTarget ? "N/A" : formatCurrency(goal.targetAmount)}
               </span>
-              <span className="goal-card-pct">{goal.progressPercent}%</span>
+              <span className="goal-card-pct">
+                {hasZeroTarget ? "N/A" : isCompleted ? "100%" : `${goal.progressPercent}%`}
+              </span>
             </div>
           </div>
         </div>

@@ -4,13 +4,12 @@ import "./DashboardStats.css"
 
 // format a number as Nigerian Naira with M/K suffixes for readability
 function formatCurrency(n: number): string {
-  if (n >= 1_000_000) {
-    return `₦${(n / 1_000_000).toFixed(2)}M`
-  }
-  if (n >= 1_000) {
-    return `₦${(n / 1_000).toFixed(1)}K`
-  }
-  return `₦${n.toLocaleString()}`
+  const abs = Math.abs(n)
+  let formatted = ""
+  if (abs >= 1_000_000) formatted = `${(abs / 1_000_000).toFixed(1)}M`
+  else if (abs >= 1_000) formatted = `${(abs / 1_000).toFixed(0)}K`
+  else formatted = abs.toLocaleString()
+  return n < 0 ? `-₦${formatted}` : `₦${formatted}`
 }
 
 // format a percentage with an explicit + sign for positive values
