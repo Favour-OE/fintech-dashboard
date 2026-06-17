@@ -1,4 +1,3 @@
-// Goals API — types and CRUD functions for savings goals
 import apiClient from "./client"
 
 export interface Goal {
@@ -9,14 +8,16 @@ export interface Goal {
   currentAmount: number
   category: string
   createdAt: string
+  progressPercent: number
+  color: string
+  icon: string
 }
 
 export interface CreateGoalPayload {
   name: string
-  description: string
+  description?: string
   targetAmount: number
-  currentAmount: number
-  category: string
+  currentAmount?: number
 }
 
 export interface UpdateGoalPayload {
@@ -41,7 +42,7 @@ export async function updateGoal(
   id: number,
   payload: UpdateGoalPayload
 ): Promise<Goal> {
-  const { data } = await apiClient.put<Goal>(`/goals/${id}`, payload)
+  const { data } = await apiClient.patch<Goal>(`/goals/${id}`, payload)
   return data
 }
 
