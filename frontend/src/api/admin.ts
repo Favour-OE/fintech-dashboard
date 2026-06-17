@@ -1,0 +1,16 @@
+import apiClient from "./client"
+import type { Holding } from "./dashboard"
+
+export interface AdminSummaryResponse {
+  totalPortfolioValue: number
+  totalAssets: number
+  totalTransactions: number
+  averageReturn: number
+  topPerformer: Holding | null
+  worstPerformer: Holding | null
+}
+
+export async function fetchAdminSummary(): Promise<AdminSummaryResponse> {
+  const { data } = await apiClient.get<AdminSummaryResponse>("/api/admin")
+  return data
+}
