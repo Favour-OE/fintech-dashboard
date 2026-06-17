@@ -4,22 +4,22 @@ export function useCountUp(end: number, duration = 600, enabled = true): number 
   const [count, setCount] = useState(enabled ? 0 : end)
   const startTime = useRef<number | null>(null)
   const raf = useRef<number>(0)
+  const endRef = useRef(end)
 
   useEffect(() => {
-    if (!enabled) {
-      setCount(end)
-      return
-    }
+    endRef.current = end
+  }, [end])
 
+  useEffect(() => {
+    if (!enabled) return
     startTime.current = null
-    const startValue = 0
 
     function animate(now: number) {
       if (startTime.current === null) startTime.current = now
       const elapsed = now - startTime.current
       const progress = Math.min(elapsed / duration, 1)
       const eased = 1 - Math.pow(1 - progress, 3)
-      setCount(startValue + (end - startValue) * eased)
+      setCount(eased * endRef.current)
 
       if (progress < 1) {
         raf.current = requestAnimationFrame(animate)
@@ -28,7 +28,7 @@ export function useCountUp(end: number, duration = 600, enabled = true): number 
 
     raf.current = requestAnimationFrame(animate)
     return () => cancelAnimationFrame(raf.current)
-  }, [end, duration, enabled])
+  }, [duration, enabled])
 
   return count
 }

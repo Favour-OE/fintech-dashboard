@@ -66,7 +66,7 @@ export default function PortfolioChart({ data, period, onPeriodChange }: Portfol
             width={70}
           />
           <Tooltip
-            formatter={(value: number) => [formatCurrency(value), "Value"]}
+            formatter={(value) => [formatCurrency(Number(value) || 0), "Value"]}
             contentStyle={{
               borderRadius: 8,
               border: "1px solid #e8eaed",

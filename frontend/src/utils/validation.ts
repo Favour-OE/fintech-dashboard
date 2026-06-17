@@ -45,6 +45,7 @@ export function validateGoalForm(data: GoalFormData): ValidationResult {
   return { valid: Object.keys(errors).length === 0, errors }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function validateTransaction(_data: unknown): ValidationResult {
   return { valid: true, errors: {} }
 }

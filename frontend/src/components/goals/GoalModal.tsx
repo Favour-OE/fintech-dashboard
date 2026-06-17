@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, type FormEvent } from "react"
+import { useState, useMemo, type FormEvent } from "react"
 import { createGoal, updateGoal, type CreateGoalPayload, type UpdateGoalPayload, type Goal } from "../../api/goals"
 import { validateGoalForm, type ValidationErrors } from "../../utils/validation"
 import "./GoalModal.css"
@@ -11,31 +11,15 @@ interface GoalModalProps {
 }
 
 export default function GoalModal({ isOpen, onClose, onSaved, editingGoal }: GoalModalProps) {
-  const [name, setName] = useState("")
-  const [targetAmount, setTargetAmount] = useState("")
-  const [currentAmount, setCurrentAmount] = useState("")
-  const [description, setDescription] = useState("")
+  const [name, setName] = useState(editingGoal?.name ?? "")
+  const [targetAmount, setTargetAmount] = useState(editingGoal ? String(editingGoal.targetAmount) : "")
+  const [currentAmount, setCurrentAmount] = useState(editingGoal ? String(editingGoal.currentAmount) : "")
+  const [description, setDescription] = useState(editingGoal?.description ?? "")
   const [errors, setErrors] = useState<ValidationErrors>({})
   const [generalError, setGeneralError] = useState("")
   const [submitting, setSubmitting] = useState(false)
 
   const isEdit = !!editingGoal
-
-  useEffect(() => {
-    if (editingGoal) {
-      setName(editingGoal.name)
-      setTargetAmount(String(editingGoal.targetAmount))
-      setCurrentAmount(String(editingGoal.currentAmount))
-      setDescription(editingGoal.description)
-    } else {
-      setName("")
-      setTargetAmount("")
-      setCurrentAmount("")
-      setDescription("")
-    }
-    setErrors({})
-    setGeneralError("")
-  }, [editingGoal, isOpen])
 
   function clearFieldError(field: string) {
     setErrors((prev) => {
@@ -81,8 +65,13 @@ export default function GoalModal({ isOpen, onClose, onSaved, editingGoal }: Goa
       }
       onSaved()
       onClose()
-    } catch (err: any) {
-      setGeneralError(err?.response?.data?.error ?? err?.message ?? "Failed to save goal")
+    } catch (err: unknown) {
+      if (err && typeof err === "object" && "response" in err) {
+        const axiosErr = err as { response?: { data?: { error?: string } }; message?: string }
+        setGeneralError(axiosErr.response?.data?.error ?? axiosErr.message ?? "Failed to save goal")
+      } else {
+        setGeneralError(err instanceof Error ? err.message : "Failed to save goal")
+      }
     } finally {
       setSubmitting(false)
     }

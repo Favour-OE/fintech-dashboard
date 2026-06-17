@@ -17,7 +17,10 @@ export default function usePolling<T>(
   const [error, setError] = useState<string | null>(null)
   const inFlight = useRef(false)
   const fetchRef = useRef(fetchFn)
-  fetchRef.current = fetchFn
+
+  useEffect(() => {
+    fetchRef.current = fetchFn
+  }, [fetchFn])
 
   const load = useCallback(async () => {
     if (inFlight.current) return
@@ -26,8 +29,8 @@ export default function usePolling<T>(
     try {
       const result = await fetchRef.current()
       setData(result)
-    } catch (err: any) {
-      setError(err?.message ?? "Request failed")
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Request failed")
     } finally {
       inFlight.current = false
       setLoading(false)

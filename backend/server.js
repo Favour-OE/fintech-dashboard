@@ -1,4 +1,3 @@
-// Express server entry point — mounts middleware, API routes, and error handler
 import express from "express"
 import cors from "cors"
 import dashboardRoutes from "./routes/dashboard.js"
@@ -9,23 +8,36 @@ import { start as startPriceSimulator } from "./services/priceSimulator.js"
 const app = express()
 const PORT = process.env.PORT || 3001
 
-app.use(cors())              // allow cross-origin requests from the frontend
-app.use(express.json())      // parse JSON request bodies
+const ALLOWED_ORIGINS = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(",")
+  : ["http://localhost:5173", "http://localhost:4173", "http://127.0.0.1:5173", "http://127.0.0.1:4173"]
 
-// health-check endpoint
+app.use(cors({ origin: ALLOWED_ORIGINS, credentials: true }))
+app.use(express.json())
+
+app.use((req, res, next) => {
+  const start = Date.now()
+  res.on("finish", () => {
+    const ms = Date.now() - start
+    console.log(`${req.method} ${req.originalUrl} ${res.statusCode} ${ms}ms`)
+  })
+  next()
+})
+
 app.get("/api", (_req, res) => {
   res.json({ status: "ok" })
 })
 
-// domain routes
 app.use("/api/dashboard", dashboardRoutes)
 app.use("/api/goals", goalsRoutes)
 app.use("/api/admin", adminRoutes)
 
-// global error handler — catches errors thrown in route handlers
 app.use((err, _req, res, _next) => {
-  console.error(err)
-  res.status(500).json({ error: "Internal server error" })
+  const status = err.status || 500
+  const message =
+    status === 500 ? "Internal server error" : err.message
+  if (status === 500) console.error(err)
+  res.status(status).json({ error: message, status })
 })
 
 app.listen(PORT, () => {

@@ -46,7 +46,7 @@ export default function AllocationChart({
                 ))}
               </Pie>
               <Tooltip
-                formatter={(value: number) => [formatCurrency(value), "Value"]}
+                formatter={(value) => [formatCurrency(Number(value) || 0), "Value"]}
                 contentStyle={{
                   borderRadius: 8,
                   border: "1px solid #e8eaed",

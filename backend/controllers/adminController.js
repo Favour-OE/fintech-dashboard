@@ -1,9 +1,5 @@
 import { holdings, transactions, goals, priceHistory } from "../mockData.js"
-
-function simulateDelay() {
-  const ms = Math.floor(Math.random() * 500) + 300
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
+import { simulateDelay, simulateError } from "../utils.js"
 
 const SYMBOL_ICONS = {
   BTC: "\u20BF",
@@ -24,6 +20,7 @@ function totalValue(holding) {
 export async function getSummary(_req, res, next) {
   try {
     await simulateDelay()
+    simulateError()
 
     const totalPortfolioValue = holdings.reduce(
       (sum, h) => sum + totalValue(h),
@@ -43,9 +40,10 @@ export async function getSummary(_req, res, next) {
     }))
 
     const averageReturn =
-      gains.reduce((sum, h) => sum + h.gainPct, 0) / gains.length
+      gains.length > 0
+        ? gains.reduce((sum, h) => sum + h.gainPct, 0) / gains.length
+        : 0
 
-    // top performer — highest gain %
     const topPerformerData = [...gains].sort(
       (a, b) => b.gainPct - a.gainPct
     )[0]
@@ -53,12 +51,12 @@ export async function getSummary(_req, res, next) {
       (a, b) => a.gainPct - b.gainPct
     )[0]
 
-    // highest value asset — largest total value
     const highestValueData = [...gains].sort(
       (a, b) => b.totalValue - a.totalValue
     )[0]
 
     function performerShape(holdingData) {
+      if (!holdingData) return null
       const prices = priceHistory[holdingData.symbol] ?? []
       return {
         symbol: holdingData.symbol,
@@ -74,8 +72,8 @@ export async function getSummary(_req, res, next) {
     const worstPerformer = performerShape(worstPerformerData)
     const highestValueAsset = performerShape(highestValueData)
 
-    // closest goal — highest current/target percentage
-    const closestGoal = [...goals]
+    const goalWithPct = goals
+      .filter((g) => g.targetAmount > 0)
       .map((g) => ({
         ...g,
         progressPct: Math.min(
@@ -83,18 +81,17 @@ export async function getSummary(_req, res, next) {
           100
         ),
       }))
-      .sort((a, b) => b.progressPct - a.progressPct)[0]
+      .sort((a, b) => b.progressPct - a.progressPct)
 
-    // allocation pie
+    const closestGoal = goalWithPct.length > 0 ? goalWithPct[0] : null
+
     const allocationPie = holdings.map((h) => ({
       symbol: h.symbol,
       name: h.name,
       value: Math.round(totalValue(h)),
       percentage:
         totalPortfolioValue > 0
-          ? Math.round(
-              (totalValue(h) / totalPortfolioValue) * 10000
-            ) / 100
+          ? Math.round((totalValue(h) / totalPortfolioValue) * 10000) / 100
           : 0,
     }))
 
@@ -107,14 +104,16 @@ export async function getSummary(_req, res, next) {
       topPerformer,
       worstPerformer,
       highestValueAsset,
-      closestGoal: {
-        id: closestGoal.id,
-        name: closestGoal.name,
-        progressPct: closestGoal.progressPct,
-        currentAmount: closestGoal.currentAmount,
-        targetAmount: closestGoal.targetAmount,
-        color: closestGoal.color,
-      },
+      closestGoal: closestGoal
+        ? {
+            id: closestGoal.id,
+            name: closestGoal.name,
+            progressPct: closestGoal.progressPct,
+            currentAmount: closestGoal.currentAmount,
+            targetAmount: closestGoal.targetAmount,
+            color: closestGoal.color,
+          }
+        : null,
       allocationPie,
     })
   } catch (err) {

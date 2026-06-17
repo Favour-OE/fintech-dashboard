@@ -1,6 +1,6 @@
 export function formatCurrency(n: number): string {
   const abs = Math.abs(n)
-  let formatted = ""
+  let formatted
   if (abs >= 1_000_000) formatted = `${(abs / 1_000_000).toFixed(1)}M`
   else if (abs >= 1_000) formatted = `${(abs / 1_000).toFixed(0)}K`
   else formatted = abs.toLocaleString()

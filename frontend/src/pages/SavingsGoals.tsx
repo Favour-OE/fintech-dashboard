@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState } from "react"
 import { fetchGoals, deleteGoal, type Goal } from "../api/goals"
 import GoalCard from "../components/goals/GoalCard"
 import GoalModal from "../components/goals/GoalModal"
@@ -13,18 +13,23 @@ export default function SavingsGoals() {
   const [modalOpen, setModalOpen] = useState(false)
   const [editingGoal, setEditingGoal] = useState<Goal | null>(null)
 
-  const load = useCallback(() => {
+  useEffect(() => {
+    let cancelled = false
+    fetchGoals()
+      .then((data) => { if (!cancelled) setGoals(data) })
+      .catch((err) => { if (!cancelled) setError(err?.message ?? "Failed to load goals") })
+      .finally(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
+  }, [])
+
+  function reload() {
     setLoading(true)
     setError(null)
     fetchGoals()
       .then(setGoals)
       .catch((err) => setError(err?.message ?? "Failed to load goals"))
       .finally(() => setLoading(false))
-  }, [])
-
-  useEffect(() => {
-    load()
-  }, [load])
+  }
 
   useEffect(() => {
     const t = setTimeout(() => setAnimated(true), 100)
@@ -38,7 +43,7 @@ export default function SavingsGoals() {
 
   function handleDelete(id: number) {
     if (!window.confirm("Delete this goal?")) return
-    deleteGoal(id).then(load).catch(() => {})
+    deleteGoal(id).then(reload).catch(() => {})
   }
 
   function handleCloseModal() {
@@ -47,7 +52,7 @@ export default function SavingsGoals() {
   }
 
   function handleSaved() {
-    load()
+    reload()
   }
 
   if (loading) {
@@ -82,7 +87,7 @@ export default function SavingsGoals() {
   if (error) {
     return (
       <div className="savings-page">
-        <ErrorState message={error} onRetry={load} />
+        <ErrorState message={error} onRetry={reload} />
       </div>
     )
   }
@@ -106,7 +111,7 @@ export default function SavingsGoals() {
             New Goal
           </button>
         </div>
-        <GoalModal
+        <GoalModal key={modalOpen ? "open" : "closed"}
           isOpen={modalOpen}
           onClose={handleCloseModal}
           onSaved={handleSaved}
@@ -136,7 +141,7 @@ export default function SavingsGoals() {
           />
         ))}
       </div>
-      <GoalModal
+      <GoalModal key={modalOpen ? "open" : "closed"}
         isOpen={modalOpen}
         onClose={handleCloseModal}
         onSaved={handleSaved}
