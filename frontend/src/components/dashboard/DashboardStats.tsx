@@ -1,7 +1,7 @@
 // Dashboard stats grid — fetches dashboard data and renders 4 StatCards in a responsive grid
 import { useEffect, useState } from "react"
-import { fetchDashboard, type DashboardResponse } from "../api/dashboard"
-import StatCard from "./StatCard"
+import { fetchDashboard, type DashboardResponse } from "../../api/dashboard"
+import StatCard from "../shared/StatCard"
 import "./DashboardStats.css"
 
 // format a number as Nigerian Naira with M/K suffixes for readability

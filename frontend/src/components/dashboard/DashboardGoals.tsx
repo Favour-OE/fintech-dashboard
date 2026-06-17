@@ -1,7 +1,7 @@
 // Dashboard goals overview — fetches goals and displays up to 4 compact cards with progress bars
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { fetchGoals, type Goal } from "../api/goals"
+import { fetchGoals, type Goal } from "../../api/goals"
 import "./DashboardGoals.css"
 
 function formatCurrency(n: number): string {

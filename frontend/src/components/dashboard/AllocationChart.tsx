@@ -1,6 +1,6 @@
 // Asset allocation donut chart — Recharts PieChart with colored segments, a center total label, and a legend
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts"
-import type { Allocation } from "../api/dashboard"
+import type { Allocation } from "../../api/dashboard"
 import "./AllocationChart.css"
 
 // deterministic color per symbol so each asset always keeps the same color

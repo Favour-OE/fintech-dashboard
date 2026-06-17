@@ -1,6 +1,6 @@
 // Root router — all routes are children of Layout so the topbar and mobile nav persist across pages
 import { Routes, Route, Navigate } from "react-router-dom"
-import Layout from "./components/Layout"
+import Layout from "./components/layout/Layout"
 import Dashboard from "./pages/Dashboard"
 import SavingsGoals from "./pages/SavingsGoals"
 import AdminInsights from "./pages/AdminInsights"

@@ -1,5 +1,5 @@
 // Recent transactions table — renders the last 5 transactions with type badges and status badges
-import type { Transaction } from "../api/dashboard"
+import type { Transaction } from "../../api/dashboard"
 import "./TransactionsTable.css"
 
 interface TransactionsTableProps {

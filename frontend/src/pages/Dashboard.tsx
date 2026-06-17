@@ -1,10 +1,10 @@
 // Dashboard page — assembles all dashboard sections: stats, charts, goals overview, and transactions table
 import { useEffect, useState } from "react"
-import DashboardStats from "../components/DashboardStats"
-import PortfolioChart from "../components/PortfolioChart"
-import AllocationChart from "../components/AllocationChart"
-import TransactionsTable from "../components/TransactionsTable"
-import DashboardGoals from "../components/DashboardGoals"
+import DashboardStats from "../components/dashboard/DashboardStats"
+import PortfolioChart from "../components/dashboard/PortfolioChart"
+import AllocationChart from "../components/dashboard/AllocationChart"
+import TransactionsTable from "../components/dashboard/TransactionsTable"
+import DashboardGoals from "../components/dashboard/DashboardGoals"
 import { fetchDashboard, type DashboardResponse } from "../api/dashboard"
 import "./Dashboard.css"
 

@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts"
-import type { PortfolioPoint } from "../api/dashboard"
+import type { PortfolioPoint } from "../../api/dashboard"
 import "./PortfolioChart.css"
 
 // format a number with ₦ and M/K suffixes
