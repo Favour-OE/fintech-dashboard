@@ -3,6 +3,7 @@ import DashboardStats from "../components/DashboardStats"
 import PortfolioChart from "../components/PortfolioChart"
 import AllocationChart from "../components/AllocationChart"
 import TransactionsTable from "../components/TransactionsTable"
+import DashboardGoals from "../components/DashboardGoals"
 import { fetchDashboard, type DashboardResponse } from "../api/dashboard"
 import "./Dashboard.css"
 
@@ -44,6 +45,7 @@ export default function Dashboard() {
           />
         </div>
       ) : null}
+      <DashboardGoals />
       {data && (
         <TransactionsTable transactions={data.transactions} />
       )}

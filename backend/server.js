@@ -1,6 +1,7 @@
 import express from "express"
 import cors from "cors"
 import dashboardRoutes from "./routes/dashboard.js"
+import goalsRoutes from "./routes/goals.js"
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -13,6 +14,7 @@ app.get("/api", (_req, res) => {
 })
 
 app.use("/api/dashboard", dashboardRoutes)
+app.use("/api/goals", goalsRoutes)
 
 app.use((err, _req, res, _next) => {
   console.error(err)
