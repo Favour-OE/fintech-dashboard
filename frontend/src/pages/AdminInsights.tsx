@@ -1,29 +1,14 @@
-import { useEffect, useState } from "react"
-import { fetchAdminSummary, type AdminSummaryResponse } from "../api/admin"
+import { fetchAdminSummary } from "../api/admin"
 import AdminStats from "../components/insights/AdminStats"
 import PerformerCard from "../components/insights/PerformerCard"
 import ClosestGoalCard from "../components/insights/ClosestGoalCard"
 import AvgReturnCard from "../components/insights/AvgReturnCard"
 import AllocationPie from "../components/insights/AllocationPie"
+import usePolling from "../hooks/usePolling"
 import "./AdminInsights.css"
 
 export default function AdminInsights() {
-  const [data, setData] = useState<AdminSummaryResponse | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  const load = () => {
-    setLoading(true)
-    setError(null)
-    fetchAdminSummary()
-      .then(setData)
-      .catch((err) => setError(err?.message ?? "Failed to load insights"))
-      .finally(() => setLoading(false))
-  }
-
-  useEffect(() => {
-    load()
-  }, [])
+  const { data, loading, error, refetch } = usePolling(fetchAdminSummary, 5000)
 
   if (error && !data) {
     return (
@@ -31,9 +16,9 @@ export default function AdminInsights() {
         <div className="insights-header">
           <h2>Admin Insights</h2>
         </div>
-        <AdminStats data={null} loading={false} error={error} onRetry={load} />
+        <AdminStats data={null} loading={false} error={error} />
         <div className="insights-error">
-          <button type="button" onClick={load}>Retry</button>
+          <button type="button" onClick={refetch}>Retry</button>
         </div>
       </div>
     )
@@ -45,7 +30,7 @@ export default function AdminInsights() {
         <h2>Admin Insights</h2>
       </div>
 
-      <AdminStats data={data} loading={loading} error={error} onRetry={load} />
+      <AdminStats data={data} loading={loading} error={error} />
 
       {loading ? (
         <>

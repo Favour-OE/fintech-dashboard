@@ -17,10 +17,9 @@ interface AdminStatsProps {
   data: AdminSummaryResponse | null
   loading: boolean
   error: string | null
-  onRetry?: () => void
 }
 
-export default function AdminStats({ data, loading, error, onRetry }: AdminStatsProps) {
+export default function AdminStats({ data, loading, error }: AdminStatsProps) {
   if (loading) {
     return (
       <div className="admin-stats-grid">
