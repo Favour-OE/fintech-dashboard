@@ -7,6 +7,7 @@ import "./Dashboard.css"
 export default function Dashboard() {
   const [data, setData] = useState<DashboardResponse | null>(null)
   const [loading, setLoading] = useState(true)
+  const [period, setPeriod] = useState(6)
 
   useEffect(() => {
     setLoading(true)
@@ -15,6 +16,10 @@ export default function Dashboard() {
       .catch(() => {})
       .finally(() => setLoading(false))
   }, [])
+
+  const chartData = data
+    ? data.portfolioHistory.slice(-period)
+    : []
 
   return (
     <div className="dashboard-page">
@@ -26,7 +31,11 @@ export default function Dashboard() {
         </div>
       ) : data ? (
         <div className="dashboard-charts">
-          <PortfolioChart data={data.portfolioHistory} />
+          <PortfolioChart
+            data={chartData}
+            period={period}
+            onPeriodChange={setPeriod}
+          />
         </div>
       ) : null}
     </div>

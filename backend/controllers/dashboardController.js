@@ -26,19 +26,18 @@ export async function getDashboard(_req, res, next) {
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 5)
 
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
-    const pointCount = Math.min(priceHistory.BTC?.length ?? 6, 6)
-    const startIdx = priceHistory.BTC
-      ? priceHistory.BTC.length - pointCount
-      : 0
-    const portfolioHistory = months.slice(-pointCount).map((month, i) => {
-      const idx = startIdx + i
+    const allMonths = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+    ]
+    const totalPoints = priceHistory.BTC?.length ?? 0
+    const portfolioHistory = Array.from({ length: totalPoints }, (_, i) => {
       const value = holdings.reduce((sum, h) => {
         const prices = priceHistory[h.symbol]
-        const price = prices && prices[idx] != null ? prices[idx] : h.currentPrice
+        const price = prices && prices[i] != null ? prices[i] : h.currentPrice
         return sum + h.shares * price
       }, 0)
-      return { month, value: Math.round(value) }
+      return { month: allMonths[i % 12], value: Math.round(value) }
     })
 
     const allocation = holdings.map((h) => ({

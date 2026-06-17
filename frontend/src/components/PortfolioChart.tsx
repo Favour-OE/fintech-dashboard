@@ -18,17 +18,31 @@ function formatValue(n: number): string {
 
 interface PortfolioChartProps {
   data: PortfolioPoint[]
+  period: number
+  onPeriodChange: (period: number) => void
 }
 
-export default function PortfolioChart({ data }: PortfolioChartProps) {
+const periods = [
+  { label: "3 Months", value: 3 },
+  { label: "6 Months", value: 6 },
+  { label: "1 Year", value: 12 },
+]
+
+export default function PortfolioChart({ data, period, onPeriodChange }: PortfolioChartProps) {
   return (
     <div className="portfolio-chart">
       <div className="portfolio-chart-header">
         <h3>Portfolio Performance</h3>
-        <select className="period-select">
-          <option>6 Months</option>
-          <option>3 Months</option>
-          <option>1 Year</option>
+        <select
+          className="period-select"
+          value={period}
+          onChange={(e) => onPeriodChange(Number(e.target.value))}
+        >
+          {periods.map((p) => (
+            <option key={p.value} value={p.value}>
+              {p.label}
+            </option>
+          ))}
         </select>
       </div>
       <ResponsiveContainer width="100%" height={280}>
