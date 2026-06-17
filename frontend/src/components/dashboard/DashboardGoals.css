@@ -139,6 +139,9 @@
   font-weight: 600;
   color: #1a1a2e;
 }
+.goal-seperator {
+  margin: 0 4px;
+}
 
 .goal-target {
   color: #9ca3af;

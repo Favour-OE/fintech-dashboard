@@ -121,8 +121,9 @@ export default function DashboardGoals() {
                 <span className="goal-progress-pct">{pct}%</span>
               </div>
               <div className="goal-amounts">
-                <span className="goal-current">{formatCurrency(goal.currentAmount)}</span>
-                <span className="goal-target">{formatCurrency(goal.targetAmount)}</span>
+                <span className="goal-current">{formatCurrency(goal.currentAmount)} </span>  
+                <span className = "goal-seperator"> / </span>
+                <span className="goal-target"> {formatCurrency(goal.targetAmount)}</span>
               </div>
             </div>
           )
