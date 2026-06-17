@@ -30,14 +30,41 @@ export default function SavingsGoals() {
   }, [goals])
 
   if (loading) {
-    return <div className="savings-loading">Loading goals...</div>
+    return (
+      <div className="savings-page">
+        <div className="savings-header">
+          <h2>Savings Goals</h2>
+        </div>
+        <div className="savings-list">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="goal-card goal-card--skeleton">
+              <div className="goal-card-skeleton-left">
+                <div className="skeleton-line skeleton-line--sm" />
+                <div className="skeleton-line skeleton-line--sm" />
+              </div>
+              <div className="goal-card-skeleton-body">
+                <div className="skeleton-line skeleton-line--circle" />
+                <div className="goal-card-skeleton-text">
+                  <div className="skeleton-line skeleton-line--short" />
+                  <div className="skeleton-line skeleton-line--xshort" />
+                  <div className="skeleton-line skeleton-line--long" />
+                  <div className="skeleton-line skeleton-line--medium" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
   }
 
   if (error) {
     return (
-      <div className="savings-error">
-        <p>{error}</p>
-        <button type="button" onClick={load}>Retry</button>
+      <div className="savings-page">
+        <div className="savings-error">
+          <p>{error}</p>
+          <button type="button" onClick={load}>Retry</button>
+        </div>
       </div>
     )
   }

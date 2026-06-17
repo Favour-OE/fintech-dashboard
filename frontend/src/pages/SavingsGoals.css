@@ -41,6 +41,82 @@
   gap: 12px;
 }
 
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.skeleton-line {
+  background: #e5e7eb;
+  border-radius: 4px;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-line--circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.skeleton-line--short {
+  width: 50%;
+  height: 14px;
+}
+
+.skeleton-line--xshort {
+  width: 35%;
+  height: 12px;
+}
+
+.skeleton-line--long {
+  width: 90%;
+  height: 10px;
+}
+
+.skeleton-line--medium {
+  width: 70%;
+  height: 12px;
+}
+
+.skeleton-line--sm {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+}
+
+.goal-card--skeleton {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e8eaed;
+  padding: 18px 20px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.goal-card-skeleton-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.goal-card-skeleton-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.goal-card-skeleton-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .savings-loading {
   text-align: center;
   padding: 60px 20px;
