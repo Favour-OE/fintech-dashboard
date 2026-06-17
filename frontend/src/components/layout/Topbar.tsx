@@ -11,7 +11,7 @@ export default function Topbar() {
       <div className="topbar-left">
         <div className="topbar-logo">
           <div className="logo-icon">F</div>
-          <span className="logo-text">FinTech</span>
+          <span className="logo-text">FIN-ASSESSMENT</span>
         </div>
       </div>
 

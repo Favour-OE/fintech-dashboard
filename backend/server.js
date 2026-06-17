@@ -4,6 +4,7 @@ import cors from "cors"
 import dashboardRoutes from "./routes/dashboard.js"
 import goalsRoutes from "./routes/goals.js"
 import adminRoutes from "./routes/admin.js"
+import { start as startPriceSimulator } from "./services/priceSimulator.js"
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -29,4 +30,5 @@ app.use((err, _req, res, _next) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`)
+  startPriceSimulator()
 })
