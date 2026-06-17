@@ -170,6 +170,8 @@ export const goals = [
     targetAmount: 1000000,
     currentAmount: 400000,
     category: "Savings",
+    color: "#3b82f6",
+    icon: "E",
     createdAt: "2024-01-15",
   },
   {
@@ -179,6 +181,8 @@ export const goals = [
     targetAmount: 1500000,
     currentAmount: 750000,
     category: "Travel",
+    color: "#8b5cf6",
+    icon: "V",
     createdAt: "2024-02-01",
   },
   {
@@ -188,6 +192,8 @@ export const goals = [
     targetAmount: 2500000,
     currentAmount: 1200000,
     category: "Purchase",
+    color: "#ef4444",
+    icon: "N",
     createdAt: "2024-03-10",
   },
   {
@@ -197,6 +203,8 @@ export const goals = [
     targetAmount: 10000000,
     currentAmount: 3000000,
     category: "Real Estate",
+    color: "#22c55e",
+    icon: "H",
     createdAt: "2024-01-01",
   },
 ]
