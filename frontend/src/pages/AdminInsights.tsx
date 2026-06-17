@@ -28,9 +28,11 @@ export default function AdminInsights() {
   if (error && !data) {
     return (
       <div className="insights-page">
-        <AdminStats />
+        <div className="insights-header">
+          <h2>Admin Insights</h2>
+        </div>
+        <AdminStats data={null} loading={false} error={error} onRetry={load} />
         <div className="insights-error">
-          <p>{error}</p>
           <button type="button" onClick={load}>Retry</button>
         </div>
       </div>
@@ -39,7 +41,12 @@ export default function AdminInsights() {
 
   return (
     <div className="insights-page">
-      <AdminStats />
+      <div className="insights-header">
+        <h2>Admin Insights</h2>
+      </div>
+
+      <AdminStats data={data} loading={loading} error={error} onRetry={load} />
+
       {loading ? (
         <>
           <div className="insights-performer-row">

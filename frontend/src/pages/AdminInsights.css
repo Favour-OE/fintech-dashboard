@@ -3,6 +3,19 @@
   margin: 0 auto;
 }
 
+.insights-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.insights-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
 .insights-performer-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -98,5 +111,11 @@
 
   .insights-bottom-row {
     grid-template-columns: 1fr;
+  }
+
+  .insights-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 }

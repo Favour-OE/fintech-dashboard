@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react"
-import { fetchAdminSummary, type AdminSummaryResponse } from "../../api/admin"
+import type { AdminSummaryResponse } from "../../api/admin"
 import StatCard from "../shared/StatCard"
 import "./AdminStats.css"
 
@@ -14,30 +13,14 @@ function formatChange(pct: number): string {
   return `${sign}${pct.toFixed(2)}%`
 }
 
-export default function AdminStats() {
-  const [data, setData] = useState<AdminSummaryResponse | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+interface AdminStatsProps {
+  data: AdminSummaryResponse | null
+  loading: boolean
+  error: string | null
+  onRetry?: () => void
+}
 
-  useEffect(() => {
-    let cancelled = false
-    setLoading(true)
-    setError(null)
-    fetchAdminSummary()
-      .then((res) => {
-        if (!cancelled) setData(res)
-      })
-      .catch((err) => {
-        if (!cancelled) setError(err?.message ?? "Failed to load insights")
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false)
-      })
-    return () => {
-      cancelled = true
-    }
-  }, [])
-
+export default function AdminStats({ data, loading, error, onRetry }: AdminStatsProps) {
   if (loading) {
     return (
       <div className="admin-stats-grid">
