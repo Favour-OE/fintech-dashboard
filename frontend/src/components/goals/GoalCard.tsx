@@ -1,10 +1,6 @@
 import type { Goal } from "../../api/goals"
+import { formatCurrency } from "../../utils/format"
 import "./GoalCard.css"
-
-function formatCurrency(n: number): string {
-  if (n < 0) return `-₦${Math.abs(n).toLocaleString()}`
-  return `₦${n.toLocaleString()}`
-}
 
 const ICON_TINTS: Record<string, { bg: string; text: string }> = {
   "#3b82f6": { bg: "#eff6ff", text: "#2563eb" },

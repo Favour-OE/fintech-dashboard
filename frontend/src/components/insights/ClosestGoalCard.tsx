@@ -1,9 +1,6 @@
 import type { ClosestGoal } from "../../api/admin"
+import { formatCurrency } from "../../utils/format"
 import "./ClosestGoalCard.css"
-
-function formatCurrency(n: number): string {
-  return `₦${n.toLocaleString()}`
-}
 
 interface ClosestGoalCardProps {
   goal: ClosestGoal

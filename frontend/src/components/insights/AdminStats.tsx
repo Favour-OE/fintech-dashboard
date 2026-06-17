@@ -1,12 +1,7 @@
 import type { AdminSummaryResponse } from "../../api/admin"
 import StatCard from "../shared/StatCard"
+import { formatCurrency } from "../../utils/format"
 import "./AdminStats.css"
-
-function formatCurrency(n: number): string {
-  const abs = Math.abs(n)
-  const formatted = abs.toLocaleString()
-  return n < 0 ? `-₦${formatted}` : `₦${formatted}`
-}
 
 function formatChange(pct: number): string {
   const sign = pct >= 0 ? "+" : ""

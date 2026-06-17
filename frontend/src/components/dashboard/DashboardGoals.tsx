@@ -2,13 +2,8 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { fetchGoals, type Goal } from "../../api/goals"
+import { formatCurrency } from "../../utils/format"
 import "./DashboardGoals.css"
-
-function formatCurrency(n: number): string {
-  if (n >= 1_000_000) return `₦${(n / 1_000_000).toFixed(2)}M`
-  if (n >= 1_000) return `₦${(n / 1_000).toFixed(1)}K`
-  return `₦${n.toLocaleString()}`
-}
 
 // color per goal category so each type has a consistent icon background
 const CATEGORY_COLORS: Record<string, string> = {

@@ -1,10 +1,7 @@
 import { AreaChart, Area, ResponsiveContainer } from "recharts"
 import type { PerformerAsset } from "../../api/admin"
+import { formatCurrency } from "../../utils/format"
 import "./PerformerCard.css"
-
-function formatCurrency(n: number): string {
-  return `₦${n.toLocaleString()}`
-}
 
 interface PerformerCardProps {
   label: string

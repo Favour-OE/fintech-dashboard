@@ -54,7 +54,7 @@
   background: #1d4ed8;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .dashboard-charts {
     grid-template-columns: 1fr;
   }

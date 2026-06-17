@@ -104,7 +104,7 @@
   height: 24px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .insights-performer-row {
     grid-template-columns: 1fr;
   }
@@ -112,7 +112,9 @@
   .insights-bottom-row {
     grid-template-columns: 1fr;
   }
+}
 
+@media (max-width: 768px) {
   .insights-header {
     flex-direction: column;
     align-items: flex-start;

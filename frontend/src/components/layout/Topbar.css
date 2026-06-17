@@ -154,10 +154,10 @@
   margin-left: 4px;
 }
 
-/* mobile: hide nav links, reduce padding, hide logo text, hide "Live" label (keep the dot) */
-@media (max-width: 768px) {
+/* tablet/mobile: hide nav links, reduce padding, hide logo text, hide "Live" label (keep the dot) */
+@media (max-width: 1024px) {
   .topbar {
-    padding: 0 18px;
+    padding: 0 24px;
   }
 
   .topbar-center {
@@ -174,5 +174,11 @@
 
   .market-status .dot {
     font-size: initial;
+  }
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    padding: 0 18px;
   }
 }

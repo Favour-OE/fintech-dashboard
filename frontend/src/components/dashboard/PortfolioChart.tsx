@@ -9,14 +9,8 @@ import {
   CartesianGrid,
 } from "recharts"
 import type { PortfolioPoint } from "../../api/dashboard"
+import { formatCurrency } from "../../utils/format"
 import "./PortfolioChart.css"
-
-// format a number with ₦ and M/K suffixes
-function formatValue(n: number): string {
-  if (n >= 1_000_000) return `₦${(n / 1_000_000).toFixed(2)}M`
-  if (n >= 1_000) return `₦${(n / 1_000).toFixed(1)}K`
-  return `₦${n.toLocaleString()}`
-}
 
 interface PortfolioChartProps {
   data: PortfolioPoint[]
@@ -65,14 +59,14 @@ export default function PortfolioChart({ data, period, onPeriodChange }: Portfol
             tick={{ fontSize: 12, fill: "#9ca3af" }}
           />
           <YAxis
-            tickFormatter={formatValue}
+            tickFormatter={formatCurrency}
             axisLine={false}
             tickLine={false}
             tick={{ fontSize: 12, fill: "#9ca3af" }}
             width={70}
           />
           <Tooltip
-            formatter={(value: number) => [formatValue(value), "Value"]}
+            formatter={(value: number) => [formatCurrency(value), "Value"]}
             contentStyle={{
               borderRadius: 8,
               border: "1px solid #e8eaed",

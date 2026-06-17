@@ -1,22 +1,7 @@
 import type { DashboardResponse } from "../../api/dashboard"
 import StatCard from "../shared/StatCard"
+import { formatCurrency, formatChange } from "../../utils/format"
 import "./DashboardStats.css"
-
-// format a number as Nigerian Naira with M/K suffixes for readability
-function formatCurrency(n: number): string {
-  const abs = Math.abs(n)
-  let formatted = ""
-  if (abs >= 1_000_000) formatted = `${(abs / 1_000_000).toFixed(1)}M`
-  else if (abs >= 1_000) formatted = `${(abs / 1_000).toFixed(0)}K`
-  else formatted = abs.toLocaleString()
-  return n < 0 ? `-₦${formatted}` : `₦${formatted}`
-}
-
-// format a percentage with an explicit + sign for positive values
-function formatChange(pct: number): string {
-  const sign = pct >= 0 ? "+" : ""
-  return `${sign}${pct.toFixed(2)}%`
-}
 
 interface DashboardStatsProps {
   data: DashboardResponse | null

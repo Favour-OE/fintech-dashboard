@@ -1,20 +1,15 @@
 // Asset allocation donut chart — Recharts PieChart with colored segments, a center total label, and a legend
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts"
 import type { Allocation } from "../../api/dashboard"
+import { formatCurrency } from "../../utils/format"
 import "./AllocationChart.css"
 
-// deterministic color per symbol so each asset always keeps the same color
 const COLORS: Record<string, string> = {
   BTC: "#3b82f6",
   ETH: "#8b5cf6",
   TSLA: "#ef4444",
   AAPL: "#22c55e",
-}
-
-function formatValue(n: number): string {
-  if (n >= 1_000_000) return `₦${(n / 1_000_000).toFixed(2)}M`
-  if (n >= 1_000) return `₦${(n / 1_000).toFixed(1)}K`
-  return `₦${n.toLocaleString()}`
+  GBP: "#f59e0b",
 }
 
 interface AllocationChartProps {
@@ -51,7 +46,7 @@ export default function AllocationChart({
                 ))}
               </Pie>
               <Tooltip
-                formatter={(value: number) => [formatValue(value), "Value"]}
+                formatter={(value: number) => [formatCurrency(value), "Value"]}
                 contentStyle={{
                   borderRadius: 8,
                   border: "1px solid #e8eaed",
@@ -63,7 +58,7 @@ export default function AllocationChart({
           {/* center label overlaid on the donut hole */}
           <div className="allocation-center-label">
             <span className="allocation-center-value">
-              {formatValue(totalValue)}
+              {formatCurrency(totalValue)}
             </span>
             <span className="allocation-center-subtitle">Total</span>
           </div>
