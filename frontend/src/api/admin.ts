@@ -11,6 +11,6 @@ export interface AdminSummaryResponse {
 }
 
 export async function fetchAdminSummary(): Promise<AdminSummaryResponse> {
-  const { data } = await apiClient.get<AdminSummaryResponse>("/api/admin")
+  const { data } = await apiClient.get<AdminSummaryResponse>("/admin")
   return data
 }

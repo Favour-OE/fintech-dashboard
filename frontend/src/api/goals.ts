@@ -27,12 +27,12 @@ export interface UpdateGoalPayload {
 }
 
 export async function fetchGoals(): Promise<Goal[]> {
-  const { data } = await apiClient.get<Goal[]>("/api/goals")
+  const { data } = await apiClient.get<Goal[]>("/goals")
   return data
 }
 
 export async function createGoal(payload: CreateGoalPayload): Promise<Goal> {
-  const { data } = await apiClient.post<Goal>("/api/goals", payload)
+  const { data } = await apiClient.post<Goal>("/goals", payload)
   return data
 }
 
@@ -40,10 +40,10 @@ export async function updateGoal(
   id: number,
   payload: UpdateGoalPayload
 ): Promise<Goal> {
-  const { data } = await apiClient.put<Goal>(`/api/goals/${id}`, payload)
+  const { data } = await apiClient.put<Goal>(`/goals/${id}`, payload)
   return data
 }
 
 export async function deleteGoal(id: number): Promise<void> {
-  await apiClient.delete(`/api/goals/${id}`)
+  await apiClient.delete(`/goals/${id}`)
 }
