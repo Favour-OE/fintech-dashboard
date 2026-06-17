@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react"
 import { fetchGoals, deleteGoal, type Goal } from "../api/goals"
 import GoalCard from "../components/goals/GoalCard"
 import GoalModal from "../components/goals/GoalModal"
+import ErrorState from "../components/shared/ErrorState"
 import "./SavingsGoals.css"
 
 export default function SavingsGoals() {
@@ -81,10 +82,7 @@ export default function SavingsGoals() {
   if (error) {
     return (
       <div className="savings-page">
-        <div className="savings-error">
-          <p>{error}</p>
-          <button type="button" onClick={load}>Retry</button>
-        </div>
+        <ErrorState message={error} onRetry={load} />
       </div>
     )
   }

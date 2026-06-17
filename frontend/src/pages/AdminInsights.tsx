@@ -4,6 +4,7 @@ import PerformerCard from "../components/insights/PerformerCard"
 import ClosestGoalCard from "../components/insights/ClosestGoalCard"
 import AvgReturnCard from "../components/insights/AvgReturnCard"
 import AllocationPie from "../components/insights/AllocationPie"
+import ErrorState from "../components/shared/ErrorState"
 import usePolling from "../hooks/usePolling"
 import "./AdminInsights.css"
 
@@ -17,9 +18,7 @@ export default function AdminInsights() {
           <h2>Admin Insights</h2>
         </div>
         <AdminStats data={null} loading={false} error={error} />
-        <div className="insights-error">
-          <button type="button" onClick={refetch}>Retry</button>
-        </div>
+        <ErrorState message={error} onRetry={refetch} />
       </div>
     )
   }

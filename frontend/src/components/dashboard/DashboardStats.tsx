@@ -1,6 +1,4 @@
-// Dashboard stats grid — fetches dashboard data and renders 4 StatCards in a responsive grid
-import { useEffect, useState } from "react"
-import { fetchDashboard, type DashboardResponse } from "../../api/dashboard"
+import type { DashboardResponse } from "../../api/dashboard"
 import StatCard from "../shared/StatCard"
 import "./DashboardStats.css"
 
@@ -21,31 +19,13 @@ function formatChange(pct: number): string {
   return `${sign}${pct.toFixed(2)}%`
 }
 
-export default function DashboardStats() {
-  const [data, setData] = useState<DashboardResponse | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+interface DashboardStatsProps {
+  data: DashboardResponse | null
+  loading: boolean
+  error: string | null
+}
 
-  useEffect(() => {
-    let cancelled = false
-    setLoading(true)
-    setError(null)
-    fetchDashboard()
-      .then((res) => {
-        if (!cancelled) setData(res)
-      })
-      .catch((err) => {
-        if (!cancelled) setError(err?.message ?? "Failed to load dashboard")
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false)
-      })
-    return () => {
-      cancelled = true
-    }
-  }, [])
-
-  // loading skeleton using the same grid layout
+export default function DashboardStats({ data, loading, error }: DashboardStatsProps) {
   if (loading) {
     return (
       <div className="stats-grid">
@@ -65,12 +45,6 @@ export default function DashboardStats() {
     return (
       <div className="stats-error">
         <p>{error ?? "No data available"}</p>
-        <button
-          type="button"
-          onClick={() => window.location.reload()}
-        >
-          Retry
-        </button>
       </div>
     )
   }

@@ -5,6 +5,7 @@ import PortfolioChart from "../components/dashboard/PortfolioChart"
 import AllocationChart from "../components/dashboard/AllocationChart"
 import TransactionsTable from "../components/dashboard/TransactionsTable"
 import DashboardGoals from "../components/dashboard/DashboardGoals"
+import ErrorState from "../components/shared/ErrorState"
 import { fetchDashboard } from "../api/dashboard"
 import usePolling from "../hooks/usePolling"
 import "./Dashboard.css"
@@ -16,26 +17,18 @@ export default function Dashboard() {
   // slice portfolio history to the selected period
   const chartData = data ? data.portfolioHistory.slice(-period) : []
 
-  // full-page error if the dashboard fetch fails (individual sections have their own error states too)
   if (error && !data) {
     return (
       <div className="dashboard-page">
-        <DashboardStats />
-        <div className="dashboard-error">
-          <p>{error}</p>
-          <button type="button" onClick={refetch}>
-            Retry
-          </button>
-        </div>
+        <ErrorState message={error} onRetry={refetch} />
       </div>
     )
   }
 
   return (
     <div className="dashboard-page">
-      <DashboardStats />
+      <DashboardStats data={data} loading={loading} error={error} />
 
-      {/* charts grid — show skeletons while loading, otherwise render the two charts side by side */}
       {loading ? (
         <div className="dashboard-charts">
           <div className="chart-skeleton" />
