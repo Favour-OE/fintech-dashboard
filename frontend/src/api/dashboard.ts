@@ -29,6 +29,11 @@ export interface Allocation {
   percentage: number
 }
 
+export interface PortfolioPoint {
+  month: string
+  value: number
+}
+
 export interface DashboardResponse {
   holdings: Holding[]
   transactions: Transaction[]
@@ -37,6 +42,7 @@ export interface DashboardResponse {
   totalAssets: number
   totalTransactions: number
   allocation: Allocation[]
+  portfolioHistory: PortfolioPoint[]
 }
 
 export async function fetchDashboard(): Promise<DashboardResponse> {
