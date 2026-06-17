@@ -10,17 +10,6 @@
   gap: 20px;
 }
 
-.chart-placeholder {
-  background: #fff;
-  border: 1px solid #e8eaed;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #9ca3af;
-  font-size: 14px;
-}
-
 .chart-skeleton {
   background: #fff;
   border: 1px solid #e8eaed;

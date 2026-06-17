@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import DashboardStats from "../components/DashboardStats"
 import PortfolioChart from "../components/PortfolioChart"
+import AllocationChart from "../components/AllocationChart"
 import { fetchDashboard, type DashboardResponse } from "../api/dashboard"
 import "./Dashboard.css"
 
@@ -10,7 +11,7 @@ export default function Dashboard() {
   const [period, setPeriod] = useState(6)
 
   useEffect(() => {
-    setLoading(true)
+    // setLoading(true)
     fetchDashboard()
       .then(setData)
       .catch(() => {})
@@ -35,6 +36,10 @@ export default function Dashboard() {
             data={chartData}
             period={period}
             onPeriodChange={setPeriod}
+          />
+          <AllocationChart
+            allocation={data.allocation}
+            totalValue={data.totalValue}
           />
         </div>
       ) : null}
