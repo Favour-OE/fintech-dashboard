@@ -74,8 +74,29 @@
   50% { opacity: 0.4; }
 }
 
+.insights-bottom-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.skeleton-line--short {
+  width: 50%;
+  height: 14px;
+}
+
+.skeleton-line--long {
+  width: 80%;
+  height: 24px;
+}
+
 @media (max-width: 768px) {
   .insights-performer-row {
+    grid-template-columns: 1fr;
+  }
+
+  .insights-bottom-row {
     grid-template-columns: 1fr;
   }
 }
