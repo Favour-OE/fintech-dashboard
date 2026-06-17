@@ -56,7 +56,7 @@ export default function Dashboard() {
       )}
 
       <DashboardGoals />
-      {data && <TransactionsTable transactions={data.transactions} />}
+      <TransactionsTable transactions={data?.transactions} loading={loading} />
     </div>
   )
 }

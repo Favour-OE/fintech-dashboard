@@ -1,0 +1,9 @@
+.skeleton {
+  background: #e5e7eb;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
