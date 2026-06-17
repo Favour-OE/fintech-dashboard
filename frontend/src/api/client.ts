@@ -1,3 +1,4 @@
+// Shared Axios instance — reads base URL and timeout from Vite environment variables
 import axios from "axios"
 
 const apiClient = axios.create({

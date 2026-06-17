@@ -1,3 +1,4 @@
+// Reusable stat card — displays a label, large formatted value, and optional change indicator (green/red/gray)
 import "./StatCard.css"
 
 interface StatCardProps {

@@ -1,3 +1,4 @@
+// Dashboard goals overview — fetches goals and displays up to 4 compact cards with progress bars
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { fetchGoals, type Goal } from "../api/goals"
@@ -9,6 +10,7 @@ function formatCurrency(n: number): string {
   return `₦${n.toLocaleString()}`
 }
 
+// color per goal category so each type has a consistent icon background
 const CATEGORY_COLORS: Record<string, string> = {
   Savings: "#3b82f6",
   Travel: "#8b5cf6",
@@ -20,6 +22,8 @@ export default function DashboardGoals() {
   const [goals, setGoals] = useState<Goal[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  // animate progress bars from 0 → target width after mount
+  const [animated, setAnimated] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -38,6 +42,13 @@ export default function DashboardGoals() {
     }
   }, [])
 
+  // trigger the fill animation shortly after mount
+  useEffect(() => {
+    const t = setTimeout(() => setAnimated(true), 100)
+    return () => clearTimeout(t)
+  }, [])
+
+  // loading skeleton
   if (loading) {
     return (
       <div className="dashboard-goals">
@@ -101,9 +112,10 @@ export default function DashboardGoals() {
               </div>
               <div className="goal-progress">
                 <div className="goal-progress-bar">
+                  {/* width starts at 0 and animates to the target via CSS transition */}
                   <div
                     className="goal-progress-fill"
-                    style={{ width: `${pct}%` }}
+                    style={{ width: `${animated ? pct : 0}%` }}
                   />
                 </div>
                 <span className="goal-progress-pct">{pct}%</span>

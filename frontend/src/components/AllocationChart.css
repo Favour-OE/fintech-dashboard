@@ -1,3 +1,4 @@
+/* Allocation donut card — pie chart with absolute-positioned center label and legend below */
 .allocation-chart {
   background: #fff;
   border: 1px solid #e8eaed;
@@ -25,6 +26,7 @@
   justify-content: center;
 }
 
+/* overlaid on the donut hole */
 .allocation-center-label {
   position: absolute;
   top: 50%;
@@ -51,6 +53,7 @@
   letter-spacing: 0.5px;
 }
 
+/* flex-wrap legend below the chart */
 .allocation-legend {
   display: flex;
   flex-wrap: wrap;

@@ -1,3 +1,4 @@
+/* Dashboard goals overview — a grid of compact goal cards with animated progress bars */
 .dashboard-goals {
   background: #fff;
   border: 1px solid #e8eaed;
@@ -33,6 +34,7 @@
   gap: 10px;
 }
 
+/* skeleton placeholders */
 .goal-card--skeleton {
   padding: 14px;
   display: flex;
@@ -78,6 +80,7 @@
   gap: 8px;
 }
 
+/* colored circle with the goal's initial */
 .goal-icon {
   width: 30px;
   height: 30px;
@@ -97,6 +100,7 @@
   color: #1a1a2e;
 }
 
+/* thin progress bar row */
 .goal-progress {
   display: flex;
   align-items: center;

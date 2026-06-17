@@ -1,3 +1,4 @@
+// Recent transactions table — renders the last 5 transactions with type badges and status badges
 import type { Transaction } from "../api/dashboard"
 import "./TransactionsTable.css"
 
@@ -43,18 +44,16 @@ export default function TransactionsTable({
                   <span className="tx-name">{tx.name}</span>
                 </td>
                 <td>
-                  <span
-                    className={`tx-type tx-type--${tx.type}`}
-                  >
+                  {/* buy = green badge, sell = red badge */}
+                  <span className={`tx-type tx-type--${tx.type}`}>
                     {tx.type.charAt(0).toUpperCase() + tx.type.slice(1)}
                   </span>
                 </td>
                 <td className="tx-amount">{formatCurrency(tx.amount)}</td>
                 <td className="tx-price">{formatCurrency(tx.price)}</td>
                 <td>
-                  <span
-                    className={`tx-status tx-status--${tx.status}`}
-                  >
+                  {/* completed = green, pending = yellow, failed = red */}
+                  <span className={`tx-status tx-status--${tx.status}`}>
                     {tx.status.charAt(0).toUpperCase() + tx.status.slice(1)}
                   </span>
                 </td>

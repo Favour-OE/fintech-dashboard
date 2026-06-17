@@ -1,5 +1,7 @@
+// Goals controller — full CRUD for savings goals backed by the in-memory mock data array.
 import { goals } from "../mockData.js"
 
+// random delay between 300-800ms to simulate real API latency
 function simulateDelay() {
   const ms = Math.floor(Math.random() * 500) + 300
   return new Promise((resolve) => setTimeout(resolve, ms))

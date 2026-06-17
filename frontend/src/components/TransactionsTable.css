@@ -1,3 +1,4 @@
+/* Transactions table — white card with responsive table and colored type/status badges */
 .transactions-table-wrapper {
   background: #fff;
   border: 1px solid #e8eaed;
@@ -84,6 +85,7 @@
   font-size: 12px;
 }
 
+/* buy/sell type badges */
 .tx-type {
   display: inline-block;
   padding: 2px 8px;
@@ -109,6 +111,7 @@
   white-space: nowrap;
 }
 
+/* status badges: completed green, pending yellow, failed red */
 .tx-status {
   display: inline-block;
   padding: 2px 8px;

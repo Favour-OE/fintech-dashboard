@@ -1,9 +1,11 @@
+/* Stats grid — 4-column responsive grid of stat cards with loading skeleton and error state */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
 }
 
+/* skeleton placeholder while data loads */
 .stat-card--skeleton {
   padding: 20px;
   display: flex;
@@ -32,6 +34,7 @@
   50% { opacity: 0.4; }
 }
 
+/* error state spans the full grid width */
 .stats-error {
   grid-column: 1 / -1;
   background: #fff;

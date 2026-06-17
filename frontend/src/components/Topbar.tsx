@@ -1,3 +1,5 @@
+// Top navigation bar — logo left, centered nav links, live indicator + icons + avatar right.
+// On mobile the nav links are hidden and only logo + right section remain visible.
 import { NavLink } from "react-router-dom"
 import { navItems } from "./navItems"
 import "./Topbar.css"
@@ -5,12 +7,15 @@ import "./Topbar.css"
 export default function Topbar() {
   return (
     <header className="topbar">
+      {/* Left: logo */}
       <div className="topbar-left">
         <div className="topbar-logo">
           <div className="logo-icon">F</div>
           <span className="logo-text">FinTech</span>
         </div>
       </div>
+
+      {/* Center: desktop nav links */}
       <div className="topbar-center">
         <nav className="top-nav">
           {navItems.map((item) => (
@@ -27,6 +32,8 @@ export default function Topbar() {
           ))}
         </nav>
       </div>
+
+      {/* Right: market status, notifications, refresh, avatar */}
       <div className="topbar-right">
         <div className="market-status">
           <span className="dot" /> Live

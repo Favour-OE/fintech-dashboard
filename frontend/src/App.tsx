@@ -1,3 +1,4 @@
+// Root router — all routes are children of Layout so the topbar and mobile nav persist across pages
 import { Routes, Route, Navigate } from "react-router-dom"
 import Layout from "./components/Layout"
 import Dashboard from "./pages/Dashboard"

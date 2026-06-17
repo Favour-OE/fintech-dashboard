@@ -1,3 +1,4 @@
+/* Top navigation bar — three-column flex layout (logo / center nav / right actions) */
 .topbar {
   background: #fff;
   border-bottom: 1px solid #e8eaed;
@@ -8,6 +9,7 @@
   flex-shrink: 0;
 }
 
+/* each section gets equal flex space so logo stays left, nav stays centered, icons stay right */
 .topbar-left {
   flex: 1;
   display: flex;
@@ -29,6 +31,7 @@
   gap: 8px;
 }
 
+/* logo group */
 .topbar-logo {
   display: flex;
   align-items: center;
@@ -55,6 +58,7 @@
   color: #1a1a2e;
 }
 
+/* desktop nav links */
 .top-nav {
   display: flex;
   align-items: center;
@@ -91,6 +95,7 @@
   color: #2563eb;
 }
 
+/* live indicator with pulsing blue dot */
 .market-status {
   display: flex;
   align-items: center;
@@ -114,6 +119,7 @@
   50% { opacity: 0.5; }
 }
 
+/* icon buttons (notification, refresh) */
 .icon-btn {
   width: 32px;
   height: 32px;
@@ -132,6 +138,7 @@
   background: #f8fafc;
 }
 
+/* user avatar circle */
 .user-avatar {
   width: 32px;
   height: 32px;
@@ -147,6 +154,7 @@
   margin-left: 4px;
 }
 
+/* mobile: hide nav links, reduce padding, hide logo text, hide "Live" label (keep the dot) */
 @media (max-width: 768px) {
   .topbar {
     padding: 0 18px;

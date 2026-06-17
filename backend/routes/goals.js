@@ -1,3 +1,4 @@
+// Goals routes — full CRUD for savings goals
 import { Router } from "express"
 import {
   getGoals,

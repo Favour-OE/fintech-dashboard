@@ -1,3 +1,4 @@
+/* Global reset and base styles — applied before any component CSS */
 * {
   box-sizing: border-box;
   margin: 0;

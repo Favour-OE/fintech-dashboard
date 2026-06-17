@@ -1,3 +1,4 @@
+// Portfolio performance area chart — Recharts AreaChart with blue gradient fill and a period selector
 import {
   AreaChart,
   Area,
@@ -10,6 +11,7 @@ import {
 import type { PortfolioPoint } from "../api/dashboard"
 import "./PortfolioChart.css"
 
+// format a number with ₦ and M/K suffixes
 function formatValue(n: number): string {
   if (n >= 1_000_000) return `₦${(n / 1_000_000).toFixed(2)}M`
   if (n >= 1_000) return `₦${(n / 1_000).toFixed(1)}K`
@@ -33,6 +35,7 @@ export default function PortfolioChart({ data, period, onPeriodChange }: Portfol
     <div className="portfolio-chart">
       <div className="portfolio-chart-header">
         <h3>Portfolio Performance</h3>
+        {/* period selector controls how many months of history to display */}
         <select
           className="period-select"
           value={period}
@@ -48,6 +51,7 @@ export default function PortfolioChart({ data, period, onPeriodChange }: Portfol
       <ResponsiveContainer width="100%" height={280}>
         <AreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
           <defs>
+            {/* blue gradient that fades to near-transparent at the bottom */}
             <linearGradient id="portfolioFill" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#2563eb" stopOpacity={0.25} />
               <stop offset="100%" stopColor="#2563eb" stopOpacity={0.02} />

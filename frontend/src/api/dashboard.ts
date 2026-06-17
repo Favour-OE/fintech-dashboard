@@ -1,3 +1,4 @@
+// Dashboard API — types and function for fetching portfolio data from /api/dashboard
 import apiClient from "./client"
 
 export interface Holding {

@@ -1,8 +1,10 @@
+// Dashboard stats grid — fetches dashboard data and renders 4 StatCards in a responsive grid
 import { useEffect, useState } from "react"
 import { fetchDashboard, type DashboardResponse } from "../api/dashboard"
 import StatCard from "./StatCard"
 import "./DashboardStats.css"
 
+// format a number as Nigerian Naira with M/K suffixes for readability
 function formatCurrency(n: number): string {
   if (n >= 1_000_000) {
     return `₦${(n / 1_000_000).toFixed(2)}M`
@@ -13,6 +15,7 @@ function formatCurrency(n: number): string {
   return `₦${n.toLocaleString()}`
 }
 
+// format a percentage with an explicit + sign for positive values
 function formatChange(pct: number): string {
   const sign = pct >= 0 ? "+" : ""
   return `${sign}${pct.toFixed(2)}%`
@@ -42,6 +45,7 @@ export default function DashboardStats() {
     }
   }, [])
 
+  // loading skeleton using the same grid layout
   if (loading) {
     return (
       <div className="stats-grid">
@@ -56,6 +60,7 @@ export default function DashboardStats() {
     )
   }
 
+  // error state with page reload as simple retry
   if (error || !data) {
     return (
       <div className="stats-error">

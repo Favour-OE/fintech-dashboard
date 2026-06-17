@@ -1,3 +1,4 @@
+// Page shell — renders Topbar at the top, the active page via <Outlet />, and a fixed bottom tab nav on mobile
 import { NavLink, Outlet } from "react-router-dom"
 import Topbar from "./Topbar"
 import { navItems } from "./navItems"
@@ -10,6 +11,7 @@ export default function Layout() {
       <div className="page-body">
         <Outlet />
       </div>
+      {/* Mobile-only bottom navigation bar */}
       <nav className="mobile-nav">
         {navItems.map((item) => (
           <NavLink

@@ -1,3 +1,4 @@
+// Global state store (Zustand) — holds dashboard data, goals, admin summary, and UI state
 import { create } from "zustand"
 import type { DashboardResponse } from "../api/dashboard"
 import type { Goal } from "../api/goals"
@@ -25,6 +26,8 @@ export const useAppStore = create<AppState>((set) => ({
   adminSummary: null,
   loading: false,
   error: null,
+
+  // setters replace the entire value for each slice of state
   setActivePage: (page) => set({ activePage: page }),
   setDashboardData: (data) => set({ dashboardData: data }),
   setGoals: (goals) => set({ goals }),

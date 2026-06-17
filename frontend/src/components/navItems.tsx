@@ -1,3 +1,4 @@
+// Shared nav item definitions — used by both Topbar (desktop) and Layout (mobile bottom nav)
 export const navItems = [
   {
     to: "/dashboard",

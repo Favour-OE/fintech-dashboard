@@ -1,3 +1,4 @@
+// Goals API — types and CRUD functions for savings goals
 import apiClient from "./client"
 
 export interface Goal {

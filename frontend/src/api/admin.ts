@@ -1,3 +1,4 @@
+// Admin API — summary/insights data for the Admin Insights page
 import apiClient from "./client"
 import type { Holding } from "./dashboard"
 

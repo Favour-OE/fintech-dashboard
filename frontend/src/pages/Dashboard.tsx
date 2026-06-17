@@ -1,3 +1,4 @@
+// Dashboard page — assembles all dashboard sections: stats, charts, goals overview, and transactions table
 import { useEffect, useState } from "react"
 import DashboardStats from "../components/DashboardStats"
 import PortfolioChart from "../components/PortfolioChart"
@@ -11,8 +12,9 @@ export default function Dashboard() {
   const [data, setData] = useState<DashboardResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [period, setPeriod] = useState(6)
+  const [period, setPeriod] = useState(6) // default chart period: 6 months
 
+  // fetch dashboard data on mount with a reusable load function for retry
   const load = () => {
     setLoading(true)
     setError(null)
@@ -26,8 +28,10 @@ export default function Dashboard() {
     load()
   }, [])
 
+  // slice portfolio history to the selected period
   const chartData = data ? data.portfolioHistory.slice(-period) : []
 
+  // full-page error if the dashboard fetch fails (individual sections have their own error states too)
   if (error && !data) {
     return (
       <div className="dashboard-page">
@@ -45,6 +49,8 @@ export default function Dashboard() {
   return (
     <div className="dashboard-page">
       <DashboardStats />
+
+      {/* charts grid — show skeletons while loading, otherwise render the two charts side by side */}
       {loading ? (
         <div className="dashboard-charts">
           <div className="chart-skeleton" />
@@ -63,6 +69,7 @@ export default function Dashboard() {
           />
         </div>
       )}
+
       <DashboardGoals />
       {data && <TransactionsTable transactions={data.transactions} />}
     </div>

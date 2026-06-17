@@ -1,3 +1,4 @@
+// Application entry point — mounts the React app inside BrowserRouter for client-side routing
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import { BrowserRouter } from "react-router-dom"
