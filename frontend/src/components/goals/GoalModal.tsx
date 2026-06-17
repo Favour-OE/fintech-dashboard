@@ -1,11 +1,12 @@
-import { useState, type FormEvent } from "react"
-import { createGoal, type CreateGoalPayload } from "../../api/goals"
+import { useState, useEffect, type FormEvent } from "react"
+import { createGoal, updateGoal, type CreateGoalPayload, type UpdateGoalPayload, type Goal } from "../../api/goals"
 import "./GoalModal.css"
 
 interface GoalModalProps {
   isOpen: boolean
   onClose: () => void
-  onCreated: () => void
+  onSaved: () => void
+  editingGoal?: Goal | null
 }
 
 interface FieldErrors {
@@ -14,7 +15,7 @@ interface FieldErrors {
   currentAmount?: string
 }
 
-export default function GoalModal({ isOpen, onClose, onCreated }: GoalModalProps) {
+export default function GoalModal({ isOpen, onClose, onSaved, editingGoal }: GoalModalProps) {
   const [name, setName] = useState("")
   const [targetAmount, setTargetAmount] = useState("")
   const [currentAmount, setCurrentAmount] = useState("")
@@ -23,14 +24,23 @@ export default function GoalModal({ isOpen, onClose, onCreated }: GoalModalProps
   const [generalError, setGeneralError] = useState("")
   const [submitting, setSubmitting] = useState(false)
 
-  function reset() {
-    setName("")
-    setTargetAmount("")
-    setCurrentAmount("")
-    setDescription("")
+  const isEdit = !!editingGoal
+
+  useEffect(() => {
+    if (editingGoal) {
+      setName(editingGoal.name)
+      setTargetAmount(String(editingGoal.targetAmount))
+      setCurrentAmount(String(editingGoal.currentAmount))
+      setDescription(editingGoal.description)
+    } else {
+      setName("")
+      setTargetAmount("")
+      setCurrentAmount("")
+      setDescription("")
+    }
     setErrors({})
     setGeneralError("")
-  }
+  }, [editingGoal, isOpen])
 
   function validate(): boolean {
     const e: FieldErrors = {}
@@ -53,18 +63,27 @@ export default function GoalModal({ isOpen, onClose, onCreated }: GoalModalProps
     setSubmitting(true)
     setGeneralError("")
     try {
-      const payload: CreateGoalPayload = {
-        name: name.trim(),
-        targetAmount: Number(targetAmount),
-        currentAmount: currentAmount ? Number(currentAmount) : undefined,
-        description: description.trim() || undefined,
+      if (isEdit && editingGoal) {
+        const payload: UpdateGoalPayload = {
+          name: name.trim(),
+          targetAmount: Number(targetAmount),
+          currentAmount: currentAmount ? Number(currentAmount) : 0,
+          description: description.trim() || undefined,
+        }
+        await updateGoal(editingGoal.id, payload)
+      } else {
+        const payload: CreateGoalPayload = {
+          name: name.trim(),
+          targetAmount: Number(targetAmount),
+          currentAmount: currentAmount ? Number(currentAmount) : undefined,
+          description: description.trim() || undefined,
+        }
+        await createGoal(payload)
       }
-      await createGoal(payload)
-      reset()
-      onCreated()
+      onSaved()
       onClose()
     } catch (err: any) {
-      setGeneralError(err?.response?.data?.error ?? err?.message ?? "Failed to create goal")
+      setGeneralError(err?.response?.data?.error ?? err?.message ?? "Failed to save goal")
     } finally {
       setSubmitting(false)
     }
@@ -80,7 +99,7 @@ export default function GoalModal({ isOpen, onClose, onCreated }: GoalModalProps
     <div className="modal-overlay modal-overlay--open" onClick={handleOverlayClick}>
       <div className="modal">
         <div className="modal-header">
-          <span className="modal-title">Create New Goal</span>
+          <span className="modal-title">{isEdit ? "Edit Goal" : "Create New Goal"}</span>
           <button className="modal-close" onClick={onClose} type="button">×</button>
         </div>
         <form onSubmit={handleSubmit}>
@@ -135,7 +154,7 @@ export default function GoalModal({ isOpen, onClose, onCreated }: GoalModalProps
           <div className="modal-actions">
             <button className="btn-secondary" type="button" onClick={onClose}>Cancel</button>
             <button className="btn-primary" type="submit" disabled={submitting}>
-              {submitting ? "Creating..." : "Create Goal"}
+              {submitting ? "Saving..." : isEdit ? "Save Changes" : "Create Goal"}
             </button>
           </div>
         </form>

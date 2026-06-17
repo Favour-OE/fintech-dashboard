@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { fetchGoals, type Goal } from "../api/goals"
+import { useEffect, useState, useCallback } from "react"
+import { fetchGoals, deleteGoal, type Goal } from "../api/goals"
 import GoalCard from "../components/goals/GoalCard"
 import GoalModal from "../components/goals/GoalModal"
 import "./SavingsGoals.css"
@@ -10,24 +10,44 @@ export default function SavingsGoals() {
   const [error, setError] = useState<string | null>(null)
   const [animated, setAnimated] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
+  const [editingGoal, setEditingGoal] = useState<Goal | null>(null)
 
-  const load = () => {
+  const load = useCallback(() => {
     setLoading(true)
     setError(null)
     fetchGoals()
       .then(setGoals)
       .catch((err) => setError(err?.message ?? "Failed to load goals"))
       .finally(() => setLoading(false))
-  }
+  }, [])
 
   useEffect(() => {
     load()
-  }, [])
+  }, [load])
 
   useEffect(() => {
     const t = setTimeout(() => setAnimated(true), 100)
     return () => clearTimeout(t)
   }, [goals])
+
+  function handleEdit(goal: Goal) {
+    setEditingGoal(goal)
+    setModalOpen(true)
+  }
+
+  function handleDelete(id: number) {
+    if (!window.confirm("Delete this goal?")) return
+    deleteGoal(id).then(load).catch(() => {})
+  }
+
+  function handleCloseModal() {
+    setModalOpen(false)
+    setEditingGoal(null)
+  }
+
+  function handleSaved() {
+    load()
+  }
 
   if (loading) {
     return (
@@ -84,15 +104,16 @@ export default function SavingsGoals() {
             key={goal.id}
             goal={goal}
             animated={animated}
-            onEdit={(id) => console.log("Edit", id)}
-            onDelete={(id) => console.log("Delete", id)}
+            onEdit={() => handleEdit(goal)}
+            onDelete={handleDelete}
           />
         ))}
       </div>
       <GoalModal
         isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onCreated={load}
+        onClose={handleCloseModal}
+        onSaved={handleSaved}
+        editingGoal={editingGoal}
       />
     </div>
   )
