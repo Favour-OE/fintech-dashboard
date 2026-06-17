@@ -1,34 +1,19 @@
 import { create } from "zustand"
-
-interface DashboardData {
-  holdings: unknown[]
-  transactions: unknown[]
-  totalValue: number
-  monthlyReturn: number
-  totalAssets: number
-  totalTransactions: number
-}
-
-interface AdminSummary {
-  totalPortfolioValue: number
-  totalAssets: number
-  totalTransactions: number
-  averageReturn: number
-  topPerformer: unknown
-  worstPerformer: unknown
-}
+import type { DashboardResponse } from "../api/dashboard"
+import type { Goal } from "../api/goals"
+import type { AdminSummaryResponse } from "../api/admin"
 
 interface AppState {
   activePage: string
-  dashboardData: DashboardData | null
-  goals: unknown[]
-  adminSummary: AdminSummary | null
+  dashboardData: DashboardResponse | null
+  goals: Goal[]
+  adminSummary: AdminSummaryResponse | null
   loading: boolean
   error: string | null
   setActivePage: (page: string) => void
-  setDashboardData: (data: DashboardData) => void
-  setGoals: (goals: unknown[]) => void
-  setAdminSummary: (summary: AdminSummary) => void
+  setDashboardData: (data: DashboardResponse) => void
+  setGoals: (goals: Goal[]) => void
+  setAdminSummary: (summary: AdminSummaryResponse) => void
   setLoading: (loading: boolean) => void
   setError: (error: string | null) => void
 }

@@ -22,14 +22,21 @@ export interface Transaction {
   status: "completed" | "pending" | "failed"
 }
 
+export interface Allocation {
+  symbol: string
+  name: string
+  value: number
+  percentage: number
+}
+
 export interface DashboardResponse {
   holdings: Holding[]
   transactions: Transaction[]
-  priceHistory: Record<string, number[]>
   totalValue: number
   monthlyReturn: number
   totalAssets: number
   totalTransactions: number
+  allocation: Allocation[]
 }
 
 export async function fetchDashboard(): Promise<DashboardResponse> {
