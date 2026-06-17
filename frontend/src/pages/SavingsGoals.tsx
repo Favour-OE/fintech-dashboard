@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { fetchGoals, type Goal } from "../api/goals"
 import GoalCard from "../components/goals/GoalCard"
+import GoalModal from "../components/goals/GoalModal"
 import "./SavingsGoals.css"
 
 export default function SavingsGoals() {
@@ -8,6 +9,7 @@ export default function SavingsGoals() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [animated, setAnimated] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
 
   const load = () => {
     setLoading(true)
@@ -44,7 +46,7 @@ export default function SavingsGoals() {
     <div className="savings-page">
       <div className="savings-header">
         <h2>Savings Goals</h2>
-        <button className="savings-btn" type="button">
+        <button className="savings-btn" type="button" onClick={() => setModalOpen(true)}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M12 5v14M5 12h14"/></svg>
           New Goal
         </button>
@@ -60,6 +62,11 @@ export default function SavingsGoals() {
           />
         ))}
       </div>
+      <GoalModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onCreated={load}
+      />
     </div>
   )
 }
