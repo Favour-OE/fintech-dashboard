@@ -89,6 +89,35 @@ export default function SavingsGoals() {
     )
   }
 
+  if (goals.length === 0) {
+    return (
+      <div className="savings-page">
+        <div className="savings-header">
+          <h2>Savings Goals</h2>
+        </div>
+        <div className="savings-empty">
+          <div className="savings-empty-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <p className="savings-empty-text">No goals yet. Create your first goal!</p>
+          <button className="savings-btn" type="button" onClick={() => setModalOpen(true)}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M12 5v14M5 12h14"/></svg>
+            New Goal
+          </button>
+        </div>
+        <GoalModal
+          isOpen={modalOpen}
+          onClose={handleCloseModal}
+          onSaved={handleSaved}
+          editingGoal={editingGoal}
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="savings-page">
       <div className="savings-header">
