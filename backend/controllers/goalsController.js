@@ -15,15 +15,15 @@ function simulateError() {
 
 let nextId = goals.length + 1;
 
-const GOAL_PALETTE = [
-	{ color: "#3b82f6", icon: "S" },
-	{ color: "#8b5cf6", icon: "T" },
-	{ color: "#ef4444", icon: "P" },
-	{ color: "#22c55e", icon: "R" },
-	{ color: "#f59e0b", icon: "G" },
-	{ color: "#06b6d4", icon: "H" },
+const GOAL_COLORS = [
+	"#3b82f6",
+	"#8b5cf6",
+	"#ef4444",
+	"#22c55e",
+	"#f59e0b",
+	"#06b6d4",
 ];
-let paletteIndex = 0;
+let colorIndex = 0;
 
 function addProgressPercent(goal) {
 	const progressPercent = Math.min(
@@ -71,8 +71,8 @@ export async function createGoal(req, res, next) {
 				.json({ error: "Current amount must be 0 or greater" });
 		}
 
-		const palette = GOAL_PALETTE[paletteIndex % GOAL_PALETTE.length];
-		paletteIndex++;
+		const color = GOAL_COLORS[colorIndex % GOAL_COLORS.length];
+		colorIndex++;
 
 		const goal = {
 			id: nextId++,
@@ -81,8 +81,8 @@ export async function createGoal(req, res, next) {
 			targetAmount,
 			currentAmount: currentAmount ?? 0,
 			category: "General",
-			color: palette.color,
-			icon: palette.icon,
+			color,
+			icon: name.trim().charAt(0).toUpperCase(),
 			createdAt: new Date().toISOString().slice(0, 10),
 		};
 		goals.push(goal);

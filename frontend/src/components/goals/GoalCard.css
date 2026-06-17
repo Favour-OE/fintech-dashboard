@@ -1,0 +1,113 @@
+.goal-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e8eaed;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 16px;
+  
+}
+
+.goal-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.goal-card-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  border: 1px solid #e8eaed;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #9ca3af;
+  transition: all 0.15s;
+}
+
+.goal-card-btn:hover {
+  background: #f9fafb;
+  color: #6b7280;
+}
+
+.goal-card-btn--delete:hover {
+  background: #fef2f2;
+  color: #ef4444;
+  border-color: #fecaca;
+}
+
+.goal-card-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.goal-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.goal-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.goal-card-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.goal-card-desc {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+.goal-card-progress {
+  margin-top: 10px;
+}
+
+.goal-card-progress-track {
+  background: #f0f0f0;
+  border-radius: 20px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.goal-card-progress-fill {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 0.6s ease;
+}
+
+.goal-card-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+.goal-card-amounts {
+  color: #6b7280;
+}
+
+.goal-card-pct {
+  font-weight: 700;
+  color: #1a1a2e;
+}

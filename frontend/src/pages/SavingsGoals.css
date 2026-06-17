@@ -1,1 +1,71 @@
+.savings-page {
+  max-width: 900px;
+  margin: 0 auto;
+}
 
+.savings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.savings-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.savings-btn {
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s;
+}
+
+.savings-btn:hover {
+  background: #15803d;
+}
+
+.savings-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.savings-loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.savings-error {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.savings-error p {
+  color: #dc2626;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.savings-error button {
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
