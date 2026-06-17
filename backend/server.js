@@ -3,6 +3,7 @@ import express from "express"
 import cors from "cors"
 import dashboardRoutes from "./routes/dashboard.js"
 import goalsRoutes from "./routes/goals.js"
+import adminRoutes from "./routes/admin.js"
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -18,6 +19,7 @@ app.get("/api", (_req, res) => {
 // domain routes
 app.use("/api/dashboard", dashboardRoutes)
 app.use("/api/goals", goalsRoutes)
+app.use("/api/admin", adminRoutes)
 
 // global error handler — catches errors thrown in route handlers
 app.use((err, _req, res, _next) => {
