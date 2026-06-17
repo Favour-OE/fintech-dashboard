@@ -6,19 +6,29 @@ import "./Dashboard.css"
 
 export default function Dashboard() {
   const [data, setData] = useState<DashboardResponse | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchDashboard().then(setData).catch(() => {})
+    setLoading(true)
+    fetchDashboard()
+      .then(setData)
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   return (
     <div className="dashboard-page">
       <DashboardStats />
-      {data && (
+      {loading ? (
+        <div className="dashboard-charts">
+          <div className="chart-skeleton" />
+          <div className="chart-skeleton" />
+        </div>
+      ) : data ? (
         <div className="dashboard-charts">
           <PortfolioChart data={data.portfolioHistory} />
         </div>
-      )}
+      ) : null}
     </div>
   )
 }

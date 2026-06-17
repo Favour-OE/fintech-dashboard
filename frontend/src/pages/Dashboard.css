@@ -21,6 +21,19 @@
   font-size: 14px;
 }
 
+.chart-skeleton {
+  background: #fff;
+  border: 1px solid #e8eaed;
+  border-radius: 10px;
+  height: 340px;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
 @media (max-width: 768px) {
   .dashboard-charts {
     grid-template-columns: 1fr;
